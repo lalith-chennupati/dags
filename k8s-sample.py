@@ -14,13 +14,15 @@ default_args = {
     'retry_delay': timedelta(minutes=5)
 }
 
-dag = DAG(
-    'kubernetes_sample', schedule_interval='0 12 * * *',
-          start_date=datetime(2017, 3, 20), catchup=False))
 
-start = DummyOperator(task_id='run_this_first', dag=dag)
 
-passing = KubernetesPodOperator(namespace='airflow',
+dag = DAG('hello_world', description='Simple tutorial DAG',
+          schedule_interval='0 12 * * *',
+          start_date=datetime(2017, 3, 20), catchup=False)
+
+dummy_operator = DummyOperator(task_id='dummy_task', retries=3, dag=dag)
+
+passing = KubernetesPodOperator(namespace='s3data',
                           image="python:3.6",
                           cmds=["python","-c"],
                           arguments=["print('hello world')"],
@@ -32,7 +34,7 @@ passing = KubernetesPodOperator(namespace='airflow',
                           in_cluster=True
                           )
 
-failing = KubernetesPodOperator(namespace='airflow',
+failing = KubernetesPodOperator(namespace='s3data',
                           image="ubuntu:16.04",
                           cmds=["python","-c"],
                           arguments=["print('hello world')"],
