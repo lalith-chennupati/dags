@@ -16,7 +16,7 @@ default_args = {
 
 
 
-dag = DAG('hello_world', description='Simple tutorial DAG',
+dag = DAG('kubernetes_sample', description='Simple kubernetes sample DAG',
           schedule_interval='0 12 * * *',
           start_date=datetime(2017, 3, 20), catchup=False)
 
