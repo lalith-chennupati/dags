@@ -20,7 +20,7 @@ dag = DAG('hello_world', description='Simple tutorial DAG',
           schedule_interval='0 12 * * *',
           start_date=datetime(2017, 3, 20), catchup=False)
 
-dummy_operator = DummyOperator(task_id='dummy_task', retries=3, dag=dag)
+start = DummyOperator(task_id='dummy_task', retries=3, dag=dag)
 
 passing = KubernetesPodOperator(namespace='s3data',
                           image="python:3.6",
