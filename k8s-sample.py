@@ -22,7 +22,7 @@ dag = DAG('kubernetes_sample', description='Simple kubernetes sample DAG',
 
 start = DummyOperator(task_id='dummy_task', retries=3, dag=dag)
 
-passing = KubernetesPodOperator(namespace='default',
+passing = KubernetesPodOperator(namespace='airflow',
                           image="python:3.6",
                           cmds=["python","-c"],
                           arguments=["print('hello world')"],
@@ -34,7 +34,7 @@ passing = KubernetesPodOperator(namespace='default',
                           in_cluster=True
                           )
 
-failing = KubernetesPodOperator(namespace='default',
+failing = KubernetesPodOperator(namespace='airflow',
                           image="ubuntu:16.04",
                           cmds=["python","-c"],
                           arguments=["print('hello world')"],
